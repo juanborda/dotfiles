@@ -1,0 +1,15 @@
+{
+    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "One Dark Pro",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 60000,
+    "workbench.editor.enablePreview": false,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "workbench.sideBar.location": "left",
+    "javascript.validate.enable": false,
+    "vetur.validation.template": false,
+    "debug.node.autoAttach": "off",
+    "telemetry.enableTelemetry": false,
+    "editor.multiCursorModifier": "ctrlCmd",
+}
