@@ -42,15 +42,38 @@ git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
 "autoload -U promptinit; promptinit" >> ~/.zshrc
 "prompt pure" >> ~/.zshrc
 
+# docker
+
+sudo apt install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common -y
+
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+sudo add-apt-repository "https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io -y
+sudo usermod -aG docker juanb
+
 # apps
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
+rm ./google-chrome-stable_current_amd64.deb
 
 wget https://download-cf.jetbrains.com/webide/PhpStorm-2020.1.tar.gz
 tar -xzf PhpStorm-2020.1.tar.gz
-./PhpStorm-2020.1/bin/PhpStorm.sh 
+sh ./PhpStorm-2020.1/bin/PhpStorm.sh 
+sudo rm -rf ./PhpStorm-2020.1
 
-sudo apt install tweaks plank htop code \ -y
+sudo sh -c \
+	'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt update
+sudo apt install code -y
+
+
+sudo apt install tmux tweaks plank htop -y
 
 # TWEAKS - dash to dock - better osd - freon - remove dropdown arrow - user themes
 
