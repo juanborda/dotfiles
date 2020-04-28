@@ -37,10 +37,11 @@ sudo chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 mkdir -p "$HOME/.zsh"
 git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
-"source /home/juanb/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
-"fpath+=$HOME/.zsh/pure" >> ~/.zshrc
-"autoload -U promptinit; promptinit" >> ~/.zshrc
-"prompt pure" >> ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.zsh/zsh-syntax-highlighting"
+echo "source /home/juanb/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+echo "fpath+=$HOME/.zsh/pure" >> ~/.zshrc
+echo "autoload -U promptinit; promptinit" >> ~/.zshrc
+echo "prompt pure" >> ~/.zshrc
 
 # docker
 
@@ -58,24 +59,29 @@ sudo apt install docker-ce docker-ce-cli containerd.io -y
 sudo usermod -aG docker juanb
 
 # apps
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt install ./google-chrome-stable_current_amd64.deb
-rm ./google-chrome-stable_current_amd64.deb
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+
+sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+
+sudo apt update
+sudo apt install code -y
+sudo apt install google-chrome-stable -y
 
 wget https://download-cf.jetbrains.com/webide/PhpStorm-2020.1.tar.gz
 tar -xzf PhpStorm-2020.1.tar.gz
 sh ./PhpStorm-2020.1/bin/PhpStorm.sh 
 sudo rm -rf ./PhpStorm-2020.1
 
-sudo sh -c \
-	'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo add-apt-repository ppa:alexlarsson/flatpak
 sudo apt update
-sudo apt install code -y
-
-
-sudo apt install tmux tweaks plank htop -y
+sudo apt install tmux tweaks plank htop flatpak gnome-software-plugin-flatpak -y
 
 # TWEAKS - dash to dock - better osd - freon - remove dropdown arrow - user themes
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 flatpak install com.discordapp.Discord com.sublimetext.three \
  com.spotify.Client com.valvesoftware.Steam com.github.alecaddd.sequeler com.slack.Slack \
