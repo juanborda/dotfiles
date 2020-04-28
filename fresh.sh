@@ -25,8 +25,6 @@ sudo rm -rf /snap
 sudo rm -rf /var/snap
 sudo rm -rf /var/lib/snapd
 
-sudo apt autoremove
-
 # setup
 mkdir ~/.icons ~/.themes
 sudo apt install wget curl git -y
@@ -86,3 +84,8 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 flatpak install com.discordapp.Discord com.sublimetext.three \
  com.spotify.Client com.valvesoftware.Steam com.github.alecaddd.sequeler com.slack.Slack \
  us.zoom.Zoom org.videolan.VLC com.calibre_ebook.calibre
+ 
+sudo apt autoremove
+
+echo "Finished. Reboot..."
+ 
