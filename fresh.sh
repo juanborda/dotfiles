@@ -3,8 +3,8 @@
 # stat - update 
 sudo apt update ; sudo apt upgrade -y
 
-sudo apt purge aisleriot gnome-mahjongg gnome-mines gnome-software-plugin-snap remmina remmina-plugind-rdp remmina-plugin-secret remmina-plugin-vnc rhythmbox rhythmbox-plugin-alternative-toolbar rhythmbox-plugins snapd thunderbird thunderbird-gnome-support thunderbird-locale-en thunderbird-locale-en-gb thunderbird-locale-en-us
-gnome-sudoku gnome-games-common gbrainy brltty duplicity empathy empathy-common example-content gnome-accessibility-themes gnome-contacts gnome-mahjongg gnome-mines gnome-orca gnome-screensaver gnome-sudoku gnome-video-effects gnomine landscape-common libreoffice-avmedia-backend-gstreamer libreoffice-base-core libreoffice-calc libreoffice-common libreoffice-core libreoffice-draw libreoffice-gnome libreoffice-gtk libreoffice-impress libreoffice-math libreoffice-ogltrans libreoffice-pdfimport libreoffice-style-galaxy libreoffice-style-human libreoffice-writer totem totem-common totem-plugins gnome-todo -y
+sudo apt purge aisleriot gnome-calendar cheese \
+gnome-mahjongg gnome-mines gnome-sudoku '^libreoffice-.*' remmina rhythmbox totem
 
 # remove snap
 sudo snap remove snap-store
@@ -18,7 +18,7 @@ read snapCoreId
 
 echo "Value entered was: " $snapCoreId
 
-sudo umount /snap/core/$snapCoreId
+sudo umount "/snap/core/$snapCoreId"
 sudo apt purge snapd -y
 
 sudo rm -rf /snap
@@ -51,9 +51,11 @@ sudo apt install \
     software-properties-common -y
 
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-sudo add-apt-repository "https://download.docker.com/linux/ubuntu bionic stable"
+sudo sh -c 'echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list'
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io -y
+sudo apt install docker-compose -y
+
 sudo usermod -aG docker juanb
 
 # apps
@@ -71,19 +73,25 @@ sudo apt install google-chrome-stable -y
 
 wget https://download-cf.jetbrains.com/webide/PhpStorm-2020.1.tar.gz
 tar -xzf PhpStorm-2020.1.tar.gz
-sh ./PhpStorm-2020.1/bin/PhpStorm.sh 
-sudo rm -rf ./PhpStorm-2020.1
+sh ./PhpStorm-201.6668.153/bin/PhpStorm.sh 
 
 sudo add-apt-repository ppa:alexlarsson/flatpak
 sudo apt update
-sudo apt install tmux tweaks plank htop flatpak gnome-software-plugin-flatpak -y
+sudo apt install tmux gnome-tweaks plank htop -y
 
 # TWEAKS - dash to dock - better osd - freon - remove dropdown arrow - user themes
+sudo apt install flatpak gnome-software-plugin-flatpak -y
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-flatpak install com.discordapp.Discord com.sublimetext.three \
- com.spotify.Client com.valvesoftware.Steam com.github.alecaddd.sequeler com.slack.Slack \
- us.zoom.Zoom org.videolan.VLC com.calibre_ebook.calibre
+flatpak install flathub com.discordapp.Discord 
+flatpak install flathub com.sublimetext.three 
+flatpak install flathub com.spotify.Client 
+flatpak install flathub com.valvesoftware.Steam 
+flatpak install flathub com.github.alecaddd.sequeler 
+flatpak install flathub com.slack.Slack 
+flatpak install flathub us.zoom.Zoom 
+flatpak install flathub org.videolan.VLC 
+flatpak install flathub com.calibre_ebook.calibre
  
 sudo apt autoremove
 
